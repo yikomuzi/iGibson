@@ -55,7 +55,7 @@ comparison/
 0.monitor.csvpaper/
 0.monitor.csv
 
-cvpr/
+
 gibson/cpp-household
 
 *.idea*
@@ -83,6 +83,3 @@ igibson/render/mesh_renderer/libcryptopp.so.8.6
 igibson/render/mesh_renderer/libcryptopp.dylib
 igibson/render/mesh_renderer/libcryptopp.8.6.dylib
 
-# Coverage
-.coverage
-coverage.xml
