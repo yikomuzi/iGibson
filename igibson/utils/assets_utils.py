@@ -177,7 +177,7 @@ def get_object_models_of_category(category_name, filter_method=None):
             with open(metadata_json) as f:
                 metadata = json.load(f)
             if (filter_method == "sliceable_part" and "object_parts" not in metadata) or (
-                filter_method == "sliceable_whole" and "object_parts" in metadata
+                    filter_method == "sliceable_whole" and "object_parts" in metadata
             ):
                 models.append(model_name)
         else:
@@ -357,10 +357,10 @@ def download_ig_dataset():
     Download iGibson 1.0 dataset of scenes and objects
     """
     while (
-        input(
-            "Do you agree to the terms for using iGibson 1.0 dataset (http://svl.stanford.edu/igibson/assets/GDS_agreement.pdf)? [y/n]"
-        )
-        != "y"
+            input(
+                "Do you agree to the terms for using iGibson 1.0 dataset (http://svl.stanford.edu/igibson/assets/GDS_agreement.pdf)? [y/n]"
+            )
+            != "y"
     ):
         print("You need to agree to the terms for using iGibson 1.0 dataset.")
 

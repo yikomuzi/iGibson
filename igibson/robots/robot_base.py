@@ -54,18 +54,18 @@ class BaseRobot(StatefulObject):
             register_robot(cls)
 
     def __init__(
-        self,
-        name=None,
-        control_freq=None,
-        action_type="continuous",
-        action_normalize=True,
-        proprio_obs="default",
-        reset_joint_pos=None,
-        controller_config=None,
-        base_name=None,
-        scale=1.0,
-        self_collision=False,
-        **kwargs,
+            self,
+            name=None,
+            control_freq=None,
+            action_type="continuous",
+            action_normalize=True,
+            proprio_obs="default",
+            reset_joint_pos=None,
+            controller_config=None,
+            base_name=None,
+            scale=1.0,
+            self_collision=False,
+            **kwargs,
     ):
         """
         :param name: None or str, name of the robot object
@@ -223,13 +223,13 @@ class BaseRobot(StatefulObject):
         # Grab model base info
         body_ids = self.get_body_ids()
         assert (
-            self.base_name is not None or len(body_ids) == 1
+                self.base_name is not None or len(body_ids) == 1
         ), "Base name can be inferred only for single-body robots."
 
         for body_id in body_ids:
             base_name = p.getBodyInfo(body_id)[0].decode("utf8")
             assert (
-                base_name not in self._links
+                    base_name not in self._links
             ), "Links of a robot, even if on different bodies, must be uniquely named."
             self._links[base_name] = RobotLink(self, base_name, -1, body_id)
             # if base_name is unspecified, use this link as robot_body (base_link).
@@ -244,11 +244,11 @@ class BaseRobot(StatefulObject):
                 log.debug("Robot joint: {}".format(p.getJointInfo(body_id, j)))
                 joint_name = joint_name.decode("utf8")
                 assert (
-                    joint_name not in self._joints
+                        joint_name not in self._joints
                 ), "Joints of a robot, even if on different bodies, must be uniquely named."
                 link_name = link_name.decode("utf8")
                 assert (
-                    link_name not in self._links
+                        link_name not in self._links
                 ), "Links of a robot, even if on different bodies, must be uniquely named."
                 self._links[link_name] = RobotLink(self, link_name, j, body_id)
 
@@ -462,7 +462,7 @@ class BaseRobot(StatefulObject):
             # Compose control_dict
             control_dict = self.get_control_dict()
             # Set command, then take a controller step
-            controller.update_command(command=action[idx : idx + controller.command_dim])
+            controller.update_command(command=action[idx: idx + controller.command_dim])
             control[name] = {
                 "value": controller.step(control_dict=control_dict),
                 "type": controller.control_type,
@@ -1431,14 +1431,14 @@ class VirtualJoint(RobotJoint):
     """
 
     def __init__(
-        self,
-        joint_name,
-        joint_type,
-        get_state_callback,
-        set_pos_callback,
-        reset_pos_callback,
-        lower_limit=None,
-        upper_limit=None,
+            self,
+            joint_name,
+            joint_type,
+            get_state_callback,
+            set_pos_callback,
+            reset_pos_callback,
+            lower_limit=None,
+            upper_limit=None,
     ):
         self._joint_name = joint_name
 
@@ -1526,14 +1526,14 @@ class Virtual6DOFJoint(object):
     COMPONENT_SUFFIXES = ["x", "y", "z", "rx", "ry", "rz"]
 
     def __init__(
-        self,
-        joint_name,
-        parent_link,
-        child_link,
-        command_callback,
-        reset_callback,
-        lower_limits=None,
-        upper_limits=None,
+            self,
+            joint_name,
+            parent_link,
+            child_link,
+            command_callback,
+            reset_callback,
+            lower_limits=None,
+            upper_limits=None,
     ):
         self.joint_name = joint_name
         self.parent_link = parent_link
@@ -1639,14 +1639,14 @@ class VirtualPlanarJoint(object):
     ACTUATED_COMPONENT_SUFFIXES = ["x", "y", "rz"]  # 0, 1, 5
 
     def __init__(
-        self,
-        joint_name,
-        parent_link,
-        child_link,
-        command_callback,
-        reset_callback,
-        lower_limits=None,
-        upper_limits=None,
+            self,
+            joint_name,
+            parent_link,
+            child_link,
+            command_callback,
+            reset_callback,
+            lower_limits=None,
+            upper_limits=None,
     ):
         self.joint_name = joint_name
         self.parent_link = parent_link

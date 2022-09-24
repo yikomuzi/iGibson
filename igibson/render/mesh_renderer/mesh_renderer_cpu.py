@@ -35,13 +35,13 @@ class MeshRenderer(object):
     """
 
     def __init__(
-        self,
-        width=512,
-        height=512,
-        vertical_fov=90,
-        device_idx=0,
-        rendering_settings=MeshRendererSettings(),
-        simulator=None,
+            self,
+            width=512,
+            height=512,
+            vertical_fov=90,
+            device_idx=0,
+            rendering_settings=MeshRendererSettings(),
+            simulator=None,
     ):
         """
         :param width: width of the renderer output
@@ -205,7 +205,8 @@ class MeshRenderer(object):
         self.setup_framebuffer()
         self.vertical_fov = vertical_fov
         self.horizontal_fov = (
-            2 * np.arctan(np.tan(self.vertical_fov / 180.0 * np.pi / 2.0) * self.width / self.height) / np.pi * 180.0
+                2 * np.arctan(
+            np.tan(self.vertical_fov / 180.0 * np.pi / 2.0) * self.width / self.height) / np.pi * 180.0
         )
 
         self.camera = [1, 0, 0]
@@ -269,9 +270,9 @@ class MeshRenderer(object):
         :param glsl_version: GLSL version
         """
         if (
-            os.path.exists(self.rendering_settings.env_texture_filename)
-            or os.path.exists(self.rendering_settings.env_texture_filename2)
-            or os.path.exists(self.rendering_settings.env_texture_filename3)
+                os.path.exists(self.rendering_settings.env_texture_filename)
+                or os.path.exists(self.rendering_settings.env_texture_filename2)
+                or os.path.exists(self.rendering_settings.env_texture_filename3)
         ):
             self.r.setup_pbr(
                 os.path.join(os.path.dirname(mesh_renderer.__file__), "shaders", glsl_version),
@@ -398,14 +399,14 @@ class MeshRenderer(object):
         material.randomize()
 
     def load_object(
-        self,
-        obj_path,
-        scale=np.array([1, 1, 1]),
-        transform_orn=None,
-        transform_pos=None,
-        input_kd=None,
-        texture_scale=1.0,
-        overwrite_material=None,
+            self,
+            obj_path,
+            scale=np.array([1, 1, 1]),
+            transform_orn=None,
+            transform_pos=None,
+            input_kd=None,
+            texture_scale=1.0,
+            overwrite_material=None,
     ):
         """
         Load a wavefront obj file into the renderer and create a VisualObject to manage it.
@@ -598,11 +599,11 @@ class MeshRenderer(object):
             # filter zero values
             d[np.abs(d) < 1e-10] = 1e-10
             tangent = (delta_pos1 * delta_uv2[:, 1][:, None] - delta_pos2 * delta_uv1[:, 1][:, None]) * (1.0 / d)[
-                :, None
-            ]
+                                                                                                        :, None
+                                                                                                        ]
             bitangent = (delta_pos2 * delta_uv1[:, 0][:, None] - delta_pos1 * delta_uv2[:, 0][:, None]) * (1.0 / d)[
-                :, None
-            ]
+                                                                                                          :, None
+                                                                                                          ]
             # Set the same tangent and bitangent for all three vertices of the triangle.
             tangent = tangent.repeat(3, axis=0)
             bitangent = bitangent.repeat(3, axis=0)
@@ -641,20 +642,20 @@ class MeshRenderer(object):
         return VAO_ids
 
     def add_instance_group(
-        self,
-        object_ids,
-        link_ids=[-1],
-        poses_trans=[np.eye(4)],
-        poses_rot=[np.eye(4)],
-        pybullet_uuid=None,
-        ig_object=None,
-        class_id=0,
-        dynamic=False,
-        softbody=False,
-        use_pbr=True,
-        use_pbr_mapping=True,
-        shadow_caster=True,
-        parent_body_name=None,
+            self,
+            object_ids,
+            link_ids=[-1],
+            poses_trans=[np.eye(4)],
+            poses_rot=[np.eye(4)],
+            pybullet_uuid=None,
+            ig_object=None,
+            class_id=0,
+            dynamic=False,
+            softbody=False,
+            use_pbr=True,
+            use_pbr_mapping=True,
+            shadow_caster=True,
+            parent_body_name=None,
     ):
         """
         Create an instance group for a list of visual objects and link it to pybullet.
@@ -699,17 +700,17 @@ class MeshRenderer(object):
         self.update_instance_id_to_pb_id_map()
 
     def add_text(
-        self,
-        text_data="PLACEHOLDER: PLEASE REPLACE!",
-        font_name="OpenSans",
-        font_style="Regular",
-        font_size=48,
-        color=[0, 0, 0],
-        pixel_pos=[0, 0],
-        pixel_size=[200, 200],
-        scale=1.0,
-        background_color=None,
-        render_to_tex=False,
+            self,
+            text_data="PLACEHOLDER: PLEASE REPLACE!",
+            font_name="OpenSans",
+            font_style="Regular",
+            font_size=48,
+            color=[0, 0, 0],
+            pixel_pos=[0, 0],
+            pixel_size=[200, 200],
+            scale=1.0,
+            background_color=None,
+            render_to_tex=False,
     ):
         """
         Creates a Text object with the given parameters. Returns the text object to the caller,
@@ -784,7 +785,8 @@ class MeshRenderer(object):
         """
         self.vertical_fov = fov
         self.horizontal_fov = (
-            2 * np.arctan(np.tan(self.vertical_fov / 180.0 * np.pi / 2.0) * self.width / self.height) / np.pi * 180.0
+                2 * np.arctan(
+            np.tan(self.vertical_fov / 180.0 * np.pi / 2.0) * self.width / self.height) / np.pi * 180.0
         )
         P = perspective(self.vertical_fov, float(self.width) / float(self.height), self.znear, self.zfar)
         self.P = np.ascontiguousarray(P, np.float32)
@@ -869,7 +871,7 @@ class MeshRenderer(object):
         for material in self.material_idx_to_material_instance_mapping:
             current_material = self.material_idx_to_material_instance_mapping[material]
             if (
-                isinstance(current_material, ProceduralMaterial) or isinstance(current_material, RandomizedMaterial)
+                    isinstance(current_material, ProceduralMaterial) or isinstance(current_material, RandomizedMaterial)
             ) and current_material.request_update:
                 request_update = True
                 self.material_idx_to_material_instance_mapping[material].request_update = False
@@ -878,7 +880,8 @@ class MeshRenderer(object):
             self.update_optimized_texture_internal()
 
     def render(
-        self, modes=AVAILABLE_MODALITIES, hidden=(), return_buffer=True, render_shadow_pass=True, render_text_pass=True
+            self, modes=AVAILABLE_MODALITIES, hidden=(), return_buffer=True, render_shadow_pass=True,
+            render_text_pass=True
     ):
         """
         A function to render all the instances in the renderer and read the output from framebuffer.
@@ -1109,16 +1112,16 @@ class MeshRenderer(object):
         Clean all the framebuffers, objects and instances.
         """
         clean_list = [
-            self.color_tex_rgb,
-            self.color_tex_normal,
-            self.color_tex_semantics,
-            self.color_tex_3d,
-            self.depth_tex,
-            self.color_tex_scene_flow,
-            self.color_tex_optical_flow,
-            self.color_tex_ins_seg,
-            self.text_manager.render_tex,
-        ] + [i for i in self.text_manager.tex_ids]
+                         self.color_tex_rgb,
+                         self.color_tex_normal,
+                         self.color_tex_semantics,
+                         self.color_tex_3d,
+                         self.depth_tex,
+                         self.color_tex_scene_flow,
+                         self.color_tex_optical_flow,
+                         self.color_tex_ins_seg,
+                         self.text_manager.render_tex,
+                     ] + [i for i in self.text_manager.tex_ids]
         fbo_list = [self.fbo, self.text_manager.FBO]
         if self.msaa:
             clean_list += [
@@ -1223,8 +1226,8 @@ class MeshRenderer(object):
                         camera_pos = camera_pose[:3]
                         camera_ori = camera_pose[3:]
                         camera_ori_mat = quat2rotmat([camera_ori[-1], camera_ori[0], camera_ori[1], camera_ori[2]])[
-                            :3, :3
-                        ]
+                                         :3, :3
+                                         ]
                         camera_view_dir = camera_ori_mat.dot(np.array([0, 0, -1]))  # Mujoco camera points in -z
                         if need_flow_info and has_set_camera:
                             raise ValueError("We only allow one robot in the scene when rendering optical/scene flow.")

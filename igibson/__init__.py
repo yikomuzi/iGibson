@@ -104,9 +104,9 @@ MAX_ASSETS_VERSION_EXCL = "%d.%d.%d" % (_PARSED_VERSION.major, _PARSED_VERSION.m
 if os.path.exists(assets_path):
     _assets_version = get_version(assets_path)
     assert (
-        packaging.version.Version(MIN_ASSETS_VERSION_INCL)
-        <= _assets_version
-        < packaging.version.Version(MAX_ASSETS_VERSION_EXCL)
+            packaging.version.Version(MIN_ASSETS_VERSION_INCL)
+            <= _assets_version
+            < packaging.version.Version(MAX_ASSETS_VERSION_EXCL)
     ), "ig_assets version %s incompatible. Needs to be in range [%s, %s)" % (
         str(_assets_version),
         str(MIN_ASSETS_VERSION_INCL),
@@ -120,9 +120,9 @@ MAX_DATASET_VERSION_EXCL = "%d.%d.%d" % (_PARSED_VERSION.major, _PARSED_VERSION.
 if os.path.exists(ig_dataset_path):
     _ig_dataset_version = get_version(ig_dataset_path)
     assert (
-        packaging.version.Version(MIN_DATASET_VERSION_INCL)
-        <= _ig_dataset_version
-        < packaging.version.Version(MAX_DATASET_VERSION_EXCL)
+            packaging.version.Version(MIN_DATASET_VERSION_INCL)
+            <= _ig_dataset_version
+            < packaging.version.Version(MAX_DATASET_VERSION_EXCL)
     ), "ig_dataset version %s incompatible. Needs to be in range [%s, %s)" % (
         str(_ig_dataset_version),
         str(MIN_DATASET_VERSION_INCL),

@@ -35,17 +35,17 @@ class iGibsonEnv(BaseEnv):
     """
 
     def __init__(
-        self,
-        config_file,
-        scene_id=None,
-        mode="headless",
-        action_timestep=1 / 10.0,
-        physics_timestep=1 / 240.0,
-        rendering_settings=None,
-        vr_settings=None,
-        device_idx=0,
-        automatic_reset=False,
-        use_pb_gui=False,
+            self,
+            config_file,
+            scene_id=None,
+            mode="headless",
+            action_timestep=1 / 10.0,
+            physics_timestep=1 / 240.0,
+            rendering_settings=None,
+            vr_settings=None,
+            device_idx=0,
+            automatic_reset=False,
+            use_pb_gui=False,
     ):
         """
         :param config_file: config_file path
@@ -78,7 +78,7 @@ class iGibsonEnv(BaseEnv):
         """
         self.initial_pos_z_offset = self.config.get("initial_pos_z_offset", 0.1)
         # s = 0.5 * G * (t ** 2)
-        drop_distance = 0.5 * 9.8 * (self.action_timestep**2)
+        drop_distance = 0.5 * 9.8 * (self.action_timestep ** 2)
         assert drop_distance < self.initial_pos_z_offset, "initial_pos_z_offset is too small for collision checking"
 
         # ignore the agent's collision with these body ids

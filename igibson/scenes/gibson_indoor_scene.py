@@ -19,16 +19,16 @@ class StaticIndoorScene(IndoorScene):
     """
 
     def __init__(
-        self,
-        scene_id,
-        trav_map_resolution=0.1,
-        trav_map_erosion=2,
-        trav_map_type="with_obj",
-        build_graph=True,
-        num_waypoints=10,
-        waypoint_resolution=0.2,
-        pybullet_load_texture=True,
-        render_floor_plane=False,
+            self,
+            scene_id,
+            trav_map_resolution=0.1,
+            trav_map_erosion=2,
+            trav_map_type="with_obj",
+            build_graph=True,
+            num_waypoints=10,
+            waypoint_resolution=0.2,
+            pybullet_load_texture=True,
+            render_floor_plane=False,
     ):
         """
         Load a building scene and compute traversability

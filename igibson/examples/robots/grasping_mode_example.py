@@ -244,7 +244,7 @@ class KeyboardController:
             keypress = (
                 -1
                 if self.simulator.viewer.time_last_pressed_key is None
-                or self.simulator.viewer.time_last_pressed_key < self.time_last_keyboard_input
+                   or self.simulator.viewer.time_last_pressed_key < self.time_last_keyboard_input
                 else self.simulator.viewer.last_pressed_key
             )
         # Updating the time of the last check

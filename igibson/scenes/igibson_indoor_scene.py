@@ -45,31 +45,31 @@ class InteractiveIndoorScene(StaticIndoorScene):
     """
 
     def __init__(
-        self,
-        scene_id,
-        urdf_file=None,
-        urdf_path=None,
-        pybullet_filename=None,
-        trav_map_resolution=0.1,
-        trav_map_erosion=2,
-        trav_map_type="with_obj",
-        build_graph=True,
-        num_waypoints=10,
-        waypoint_resolution=0.2,
-        texture_randomization=False,
-        link_collision_tolerance=0.03,
-        object_randomization=False,
-        object_randomization_idx=None,
-        should_open_all_doors=False,
-        load_object_categories=None,
-        not_load_object_categories=None,
-        load_room_types=None,
-        load_room_instances=None,
-        seg_map_resolution=0.1,
-        scene_source="IG",
-        merge_fixed_links=True,
-        rendering_params=None,
-        include_robots=True,
+            self,
+            scene_id,
+            urdf_file=None,
+            urdf_path=None,
+            pybullet_filename=None,
+            trav_map_resolution=0.1,
+            trav_map_erosion=2,
+            trav_map_type="with_obj",
+            build_graph=True,
+            num_waypoints=10,
+            waypoint_resolution=0.2,
+            texture_randomization=False,
+            link_collision_tolerance=0.03,
+            object_randomization=False,
+            object_randomization_idx=None,
+            should_open_all_doors=False,
+            load_object_categories=None,
+            not_load_object_categories=None,
+            load_room_types=None,
+            load_room_instances=None,
+            seg_map_resolution=0.1,
+            scene_source="IG",
+            merge_fixed_links=True,
+            rendering_params=None,
+            include_robots=True,
     ):
         """
         :param scene_id: Scene id
@@ -235,7 +235,7 @@ class InteractiveIndoorScene(StaticIndoorScene):
                 robot_config = json.loads(link.attrib["robot_config"]) if "robot_config" in link.attrib else {}
                 assert model in REGISTERED_ROBOTS, "Got invalid robot to instantiate: {}".format(model)
                 assert (
-                    object_name == robot_config["name"]
+                        object_name == robot_config["name"]
                 ), "the robot name saved in link doesn't match the robot name stored in the robot config"
                 obj = REGISTERED_ROBOTS[model](**robot_config)
 
@@ -384,7 +384,7 @@ class InteractiveIndoorScene(StaticIndoorScene):
         return list(self.objects_by_state[state]) if state in self.objects_by_state else []
 
     def filter_rooms_and_object_categories(
-        self, load_object_categories, not_load_object_categories, load_room_types, load_room_instances
+            self, load_object_categories, not_load_object_categories, load_room_types, load_room_instances
     ):
         """
         Handle partial scene loading based on object categories, room types or room instances
@@ -1287,7 +1287,7 @@ class InteractiveIndoorScene(StaticIndoorScene):
             scene_tree = ET.parse(urdf_path)
 
         assert (
-            pybullet_filename is None or pybullet_state_id is None
+                pybullet_filename is None or pybullet_state_id is None
         ), "you can only specify either a pybullet filename or a pybullet state id"
 
         object_states = defaultdict(dict)
@@ -1317,13 +1317,13 @@ class InteractiveIndoorScene(StaticIndoorScene):
             restoreState(stateId=pybullet_state_id)
 
     def save(
-        self,
-        urdf_name=None,
-        urdf_path=None,
-        pybullet_filename=None,
-        pybullet_save_state=False,
-        save_agent_pose_only=False,
-        additional_attribs_by_name={},
+            self,
+            urdf_name=None,
+            urdf_path=None,
+            pybullet_filename=None,
+            pybullet_save_state=False,
+            save_agent_pose_only=False,
+            additional_attribs_by_name={},
     ):
         """
         Saves a modified URDF file in the scene urdf directory having all objects added to the scene.

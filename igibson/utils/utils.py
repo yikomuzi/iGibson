@@ -13,11 +13,11 @@ from transforms3d import quaternions
 
 from igibson.utils.constants import CoordinateSystem
 
+
 # File I/O related
 
 
 def parse_config(config):
-
     """
     Parse iGibson config file / object
     """
@@ -121,7 +121,7 @@ def l2_distance(v1, v2):
 
 def cartesian_to_polar(x, y):
     """Convert cartesian coordinate to polar coordinate"""
-    rho = np.sqrt(x**2 + y**2)
+    rho = np.sqrt(x ** 2 + y ** 2)
     phi = np.arctan2(y, x)
     return rho, phi
 
@@ -129,7 +129,7 @@ def cartesian_to_polar(x, y):
 def quatFromXYZW(xyzw, seq):
     """Convert quaternion from XYZW (pybullet convention) to arbitrary sequence."""
     assert (
-        len(seq) == 4 and "x" in seq and "y" in seq and "z" in seq and "w" in seq
+            len(seq) == 4 and "x" in seq and "y" in seq and "z" in seq and "w" in seq
     ), "Quaternion sequence {} is not valid, please double check.".format(seq)
     inds = ["xyzw".index(axis) for axis in seq]
     return xyzw[inds]
@@ -138,7 +138,7 @@ def quatFromXYZW(xyzw, seq):
 def quatToXYZW(orn, seq):
     """Convert quaternion from arbitrary sequence to XYZW (pybullet convention)."""
     assert (
-        len(seq) == 4 and "x" in seq and "y" in seq and "z" in seq and "w" in seq
+            len(seq) == 4 and "x" in seq and "y" in seq and "z" in seq and "w" in seq
     ), "Quaternion sequence {} is not valid, please double check.".format(seq)
     inds = [seq.index(axis) for axis in "xyzw"]
     return orn[inds]

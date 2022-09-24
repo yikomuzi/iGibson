@@ -7,9 +7,9 @@ from igibson.utils.constants import AVAILABLE_MODALITIES
 
 log = logging.getLogger(__name__)
 
-
 try:
     import torch
+
 
     class MeshRendererG2G(MeshRenderer):
         """
@@ -18,13 +18,13 @@ try:
         """
 
         def __init__(
-            self,
-            width=512,
-            height=512,
-            vertical_fov=90,
-            device_idx=0,
-            rendering_settings=MeshRendererSettings(),
-            simulator=None,
+                self,
+                width=512,
+                height=512,
+                vertical_fov=90,
+                device_idx=0,
+                rendering_settings=MeshRendererSettings(),
+                simulator=None,
         ):
             if platform.system() != "Linux":
                 raise Exception("Rendering to pytorch tensor is only available on Linux.")

@@ -83,23 +83,23 @@ class URDFObject(StatefulObject):
     """
 
     def __init__(
-        self,
-        filename,
-        model_path=None,
-        bounding_box=None,
-        scale=None,
-        fit_avg_dim_volume=False,
-        fixed_base=False,
-        avg_obj_dims=None,
-        joint_friction=None,
-        in_rooms=None,
-        texture_randomization=False,
-        overwrite_inertial=True,
-        scene_instance_folder=None,
-        bddl_object_scope=None,
-        visualize_primitives=False,
-        merge_fixed_links=True,
-        **kwargs,
+            self,
+            filename,
+            model_path=None,
+            bounding_box=None,
+            scale=None,
+            fit_avg_dim_volume=False,
+            fixed_base=False,
+            avg_obj_dims=None,
+            joint_friction=None,
+            in_rooms=None,
+            texture_randomization=False,
+            overwrite_inertial=True,
+            scene_instance_folder=None,
+            bddl_object_scope=None,
+            visualize_primitives=False,
+            merge_fixed_links=True,
+            **kwargs,
     ):
         """
         :param filename: urdf file path of that object model
@@ -949,7 +949,7 @@ class URDFObject(StatefulObject):
                 self.unscaled_link_bounding_boxes[converted_name] = bb_data
 
     def get_base_aligned_bounding_box(
-        self, body_id=None, link_id=None, visual=False, xy_aligned=False, link_base=False, fallback_to_aabb=False
+            self, body_id=None, link_id=None, visual=False, xy_aligned=False, link_base=False, fallback_to_aabb=False
     ):
         """Get a bounding box for this object that's in an object-centric frame specified by the parameters.
 
@@ -1044,7 +1044,7 @@ class URDFObject(StatefulObject):
                 # If no BB annotation is available, get the AABB for this link.
                 aabb_center, aabb_extent = get_center_extent(body_id, link=link)
                 aabb_vertices_in_world = aabb_center + np.array(list(itertools.product((1, -1), repeat=3))) * (
-                    aabb_extent / 2
+                        aabb_extent / 2
                 )
                 aabb_vertices_in_base_com = trimesh.transformations.transform_points(
                     aabb_vertices_in_world, world_to_base_com

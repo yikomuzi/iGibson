@@ -283,7 +283,7 @@ class KeyboardController:
             keypress = (
                 -1
                 if self.simulator.viewer.time_last_pressed_key is None
-                or self.simulator.viewer.time_last_pressed_key < self.time_last_keyboard_input
+                   or self.simulator.viewer.time_last_pressed_key < self.time_last_keyboard_input
                 else self.simulator.viewer.last_pressed_key
             )
         # Updating the time of the last check
@@ -380,11 +380,11 @@ def main(selection="user", headless=False, short_exec=False):
     gui = choose_from_options(options=GUIS, name="gui", selection=selection)
 
     if (
-        gui == "ig"
-        and platform.system() != "Darwin"
-        and control_mode == "teleop"
-        and isinstance(robot, ManipulationRobot)
-        and "InverseKinematicsController" in controller_choices.values()
+            gui == "ig"
+            and platform.system() != "Darwin"
+            and control_mode == "teleop"
+            and isinstance(robot, ManipulationRobot)
+            and "InverseKinematicsController" in controller_choices.values()
     ):
         logging.warning(
             "Warning: iG GUI does not support arrow keys for your OS (needed to control the arm with an IK Controller). Falling back to PyBullet (pb) GUI."

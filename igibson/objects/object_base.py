@@ -69,6 +69,8 @@ class BaseObject(with_metaclass(ABCMeta, object)):
         self._loaded = False
         self._body_ids = None
 
+        # self.init_center_point_bounding_box()
+
     def load(self, simulator):
         """Load object into pybullet and return list of loaded body ids."""
         if self._loaded:

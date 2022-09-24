@@ -44,18 +44,18 @@ class Simulator:
     """
 
     def __init__(
-        self,
-        gravity=9.8,
-        physics_timestep=1 / 120.0,
-        render_timestep=1 / 30.0,
-        solver_iterations=100,
-        mode="gui_interactive",
-        image_width=128,
-        image_height=128,
-        vertical_fov=90,
-        device_idx=0,
-        rendering_settings=MeshRendererSettings(),
-        use_pb_gui=False,
+            self,
+            gravity=9.8,
+            physics_timestep=1 / 120.0,
+            render_timestep=1 / 30.0,
+            solver_iterations=100,
+            mode="gui_interactive",
+            image_width=128,
+            image_height=128,
+            vertical_fov=90,
+            device_idx=0,
+            rendering_settings=MeshRendererSettings(),
+            use_pb_gui=False,
     ):
         """
         :param gravity: gravity on z direction.
@@ -271,17 +271,17 @@ class Simulator:
 
     @load_without_pybullet_vis
     def load_object_in_renderer(
-        self,
-        obj,
-        body_id,
-        class_id,
-        link_name_to_vm=None,
-        visual_mesh_to_material=None,
-        use_pbr=True,
-        use_pbr_mapping=True,
-        shadow_caster=True,
-        softbody=False,
-        texture_scale=1.0,
+            self,
+            obj,
+            body_id,
+            class_id,
+            link_name_to_vm=None,
+            visual_mesh_to_material=None,
+            use_pbr=True,
+            use_pbr_mapping=True,
+            shadow_caster=True,
+            softbody=False,
+            texture_scale=1.0,
     ):
         """
         Load an object into the MeshRenderer. The object should be already loaded into pybullet.
@@ -495,10 +495,10 @@ class Simulator:
         :param c_link: link index or -1 for the base
         """
         if (
-            not hasattr(self.scene, "objects_by_id")
-            or body_id not in self.scene.objects_by_id
-            or not hasattr(self.scene.objects_by_id[body_id], "category")
-            or self.scene.objects_by_id[body_id].category == "object"
+                not hasattr(self.scene, "objects_by_id")
+                or body_id not in self.scene.objects_by_id
+                or not hasattr(self.scene.objects_by_id[body_id], "category")
+                or self.scene.objects_by_id[body_id].category == "object"
         ):
             mass = p.getDynamicsInfo(body_id, c_link)[0]
             return mass <= self.assist_grasp_mass_thresh

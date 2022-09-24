@@ -62,9 +62,9 @@ class ViewerSimple:
     """Viewer class that just renders - V and P matrices are updated using the VRLogger."""
 
     def __init__(
-        self,
-        simulator=None,
-        renderer=None,
+            self,
+            simulator=None,
+            renderer=None,
     ):
         self.renderer = renderer
         self.simulator = simulator
@@ -83,13 +83,13 @@ class ViewerSimple:
 
 class Viewer:
     def __init__(
-        self,
-        initial_pos=[6.6, 5.6, 3.4],  # [0, 0, 1.2],
-        initial_view_direction=[-0.7, -0.6, -0.4],  # [1, 0, 0],
-        initial_up=[0, 0, 1],
-        simulator=None,
-        renderer=None,
-        min_cam_z=-1e6,
+            self,
+            initial_pos=[1, 0, 0],  # [0, 0, 1.2],
+            initial_view_direction=[-1, 0, 0],  # [1, 0, 0],
+            initial_up=[0, 0, 1],
+            simulator=None,
+            renderer=None,
+            min_cam_z=-1e6,
     ):
         """
         iGibson GUI (Viewer) for navigation, manipulation and motion planning / execution
@@ -419,7 +419,7 @@ class Viewer:
             # Middle mouse button press or only once, when pressing left
             # mouse while shift key is pressed (Mac compatibility)
             elif (event == cv2.EVENT_MBUTTONDOWN) or (
-                flags == cv2.EVENT_FLAG_LBUTTON + cv2.EVENT_FLAG_SHIFTKEY and not self.middle_down
+                    flags == cv2.EVENT_FLAG_LBUTTON + cv2.EVENT_FLAG_SHIFTKEY and not self.middle_down
             ):
                 self._mouse_ix, self._mouse_iy = x, y
                 self.middle_down = True
@@ -448,8 +448,8 @@ class Viewer:
                     self._mouse_ix = x
                     self._mouse_iy = y
                     if not (
-                        (flags & cv2.EVENT_FLAG_CTRLKEY and flags & cv2.EVENT_FLAG_SHIFTKEY)
-                        or (flags & cv2.EVENT_FLAG_CTRLKEY and flags & cv2.EVENT_FLAG_ALTKEY)
+                            (flags & cv2.EVENT_FLAG_CTRLKEY and flags & cv2.EVENT_FLAG_SHIFTKEY)
+                            or (flags & cv2.EVENT_FLAG_CTRLKEY and flags & cv2.EVENT_FLAG_ALTKEY)
                     ):
                         self.phi += dy
                         self.phi = np.clip(self.phi, -np.pi / 2 + 1e-5, np.pi / 2 - 1e-5)
@@ -494,7 +494,7 @@ class Viewer:
             # Middle mouse button press or only once, when pressing left mouse
             # while shift key is pressed (Mac compatibility)
             if (event == cv2.EVENT_MBUTTONDOWN) or (
-                flags == cv2.EVENT_FLAG_LBUTTON + cv2.EVENT_FLAG_SHIFTKEY and not self.middle_down
+                    flags == cv2.EVENT_FLAG_LBUTTON + cv2.EVENT_FLAG_SHIFTKEY and not self.middle_down
             ):
                 self._mouse_ix, self._mouse_iy = x, y
                 self.middle_down = True

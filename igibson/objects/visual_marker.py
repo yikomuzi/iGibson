@@ -16,16 +16,16 @@ class VisualMarker(BaseObject):
     }
 
     def __init__(
-        self,
-        visual_shape=p.GEOM_SPHERE,
-        rgba_color=[1, 0, 0, 0.5],
-        radius=1.0,
-        half_extents=[1, 1, 1],
-        length=1,
-        initial_offset=[0, 0, 0],
-        filename=None,
-        scale=[1.0] * 3,
-        **kwargs,
+            self,
+            visual_shape=p.GEOM_SPHERE,
+            rgba_color=[1, 0, 0, 0.5],
+            radius=1.0,
+            half_extents=[1, 1, 1],
+            length=1,
+            initial_offset=[0, 0, 0],
+            filename=None,
+            scale=[1.0] * 3,
+            **kwargs,
     ):
         """
         create a visual shape to show in pybullet and MeshRenderer

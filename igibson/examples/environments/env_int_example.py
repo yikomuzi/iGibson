@@ -35,7 +35,7 @@ def main(selection="user", headless=False, short_exec=False):
     for j in range(max_iterations):
         print("Resetting environment")
         env.reset()
-        for i in range(100):
+        for i in range(10000):
             with Profiler("Environment action step"):
                 action = env.action_space.sample()
                 state, reward, done, info = env.step(action)
