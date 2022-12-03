@@ -5,7 +5,6 @@
 *.egg-info/
 .DS_Store
 *.pth
-src/
 pw
 *.o
 *.ipynb
@@ -21,16 +20,16 @@ dev/transfer.c
 *.zip
 .*.swp
 
-docs/apidoc
+#docs/apidoc
 
 # vscode
 .vscode/
 
 # Physics
-physics/*.txt
-physics/*.json
+#physics/*.txt
+#physics/*.json
 # Physics assets
-physics/models
+#physics/models
 
 */events*
 0_VRDemoSettings.txt
@@ -82,4 +81,6 @@ igibson/utils/data_utils/mesh_decimation/final_videos
 igibson/render/mesh_renderer/libcryptopp.so.8.6
 igibson/render/mesh_renderer/libcryptopp.dylib
 igibson/render/mesh_renderer/libcryptopp.8.6.dylib
+
+data/
 

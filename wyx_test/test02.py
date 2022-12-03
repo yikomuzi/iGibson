@@ -46,14 +46,14 @@ def main(selection="user", headless=False, short_exec=False):
             # 绘制物体坐标系xyz
             camera_intrinsics = s.renderer.get_intrinsics()
             camera_extrinsics = compute_camera_extrinsics_matrix(s)
-            pose_xy = compute_point_pixel_plane_coordinates(shapenet_bb_center, camera_extrinsics, camera_intrinsics)
+            pose_xy = trans_3d_point_to_2d_pixel(shapenet_bb_center, camera_extrinsics, camera_intrinsics)
             # pose_xy[0] = 500 - pose_xy[0]
             shapenet_bb_center_xy = pose_xy
             coordinate_xyz = []
             for coordinate in shapenet_bb_coordinate:
                 camera_intrinsics = s.renderer.get_intrinsics()
                 camera_extrinsics = compute_camera_extrinsics_matrix(s)
-                pose_xy = compute_point_pixel_plane_coordinates(coordinate, camera_extrinsics, camera_intrinsics)
+                pose_xy = trans_3d_point_to_2d_pixel(coordinate, camera_extrinsics, camera_intrinsics)
                 # pose_xy[0] = 500 - pose_xy[0]
                 coordinate_xyz.append(pose_xy)
             cv2.line(render_images, [int(shapenet_bb_center_xy[0]), int(shapenet_bb_center_xy[1])],
@@ -68,7 +68,7 @@ def main(selection="user", headless=False, short_exec=False):
             for points in shapenet_bb:
                 camera_intrinsics = s.renderer.get_intrinsics()
                 camera_extrinsics = compute_camera_extrinsics_matrix(s)
-                pose_xy = compute_point_pixel_plane_coordinates(points, camera_extrinsics, camera_intrinsics)
+                pose_xy = trans_3d_point_to_2d_pixel(points, camera_extrinsics, camera_intrinsics)
                 # pose_xy[0] = 500 - pose_xy[0]
                 shapenet_bb_xy.append(pose_xy)
 
@@ -89,6 +89,7 @@ def main(selection="user", headless=False, short_exec=False):
                           (255, 0, 255), 1)
 
             cv2.imshow("render_images", render_images)
+            # cv2.waitKey(1)
 
 
     finally:

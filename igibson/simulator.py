@@ -269,6 +269,7 @@ class Simulator:
         )
         self.import_object(robot)
 
+    # 【关键】与物体渲染和碰撞有关
     @load_without_pybullet_vis
     def load_object_in_renderer(
             self,

@@ -16,10 +16,15 @@ from igibson.simulator import Simulator
 from igibson.utils import utils
 
 
-def compute_point_pixel_plane_coordinates(pose_w, extrinsics, intrinsics):
+# 已知一个三维点，求其在像素平面的坐标
+def trans_3d_point_to_2d_pixel(pose_w, extrinsics, intrinsics):
     pose_c = np.matmul(extrinsics, np.array([[pose_w[0]], [pose_w[1]], [pose_w[2]], [1]], dtype=float))
     pose_c = pose_c / pose_c[3]
     pose_c = pose_c[:3]
+    print(pose_c)
+    if pose_c[2] < 0:
+        e = Exception("深度值为负数")
+        raise e
     pose_xy = np.matmul(intrinsics, pose_c)
     pose_xy = pose_xy / pose_xy[2]
     pose_xy = pose_xy[:2]

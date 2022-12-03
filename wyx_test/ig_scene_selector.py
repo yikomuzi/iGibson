@@ -7,9 +7,14 @@ import cv2
 from igibson.render.mesh_renderer.mesh_renderer_settings import MeshRendererSettings
 from igibson.render.profiler import Profiler
 from igibson.scenes.igibson_indoor_scene import InteractiveIndoorScene
+from igibson.scenes.empty_scene import EmptyScene
+from igibson.scenes.scene_base import Scene
 from igibson.simulator import Simulator
 from igibson.utils.assets_utils import get_available_ig_scenes
 from igibson.utils.utils import let_user_pick
+import pybullet as p
+from igibson.utils.wyx_utils import *
+from igibson.utils.mesh_util import *
 
 
 def main(selection="user", headless=False, short_exec=False):
@@ -21,14 +26,14 @@ def main(selection="user", headless=False, short_exec=False):
     # print("*" * 80 + "\nDescription:" + main.__doc__ + "*" * 80)
     # available_ig_scenes = get_first_options()
     # scene_id = available_ig_scenes[let_user_pick(available_ig_scenes, selection=selection) - 1]
-    scene_id = 'Beechwood_0_int'
+    scene_id = 'Rs_int'
     settings = MeshRendererSettings(enable_shadow=True, msaa=True, blend_highlight=True, )
     # if platform == "darwin":
     #     settings.texture_scale = 0.5
     s = Simulator(
         mode="gui_interactive",
-        image_width=100,
-        image_height=100,
+        image_width=500,
+        image_height=500,
         rendering_settings=settings,
         # use_pb_gui=True
     )
@@ -38,6 +43,7 @@ def main(selection="user", headless=False, short_exec=False):
         # load_object_categories=[],  # To load only the building. Fast
         build_graph=True,
     )
+    # scene = EmptyScene()
     print(scene.get_objects())
     s.import_scene(scene)
 
@@ -93,7 +99,7 @@ def main(selection="user", headless=False, short_exec=False):
             print(s.renderer.P)
             frame = s.renderer.render(modes=('rgb', 'normal', 'seg', '3d', 'scene_flow', 'optical_flow'))
             render_images = cv2.cvtColor(np.concatenate(frame, axis=1), cv2.COLOR_RGB2BGR)
-            render_images = cv2.resize(render_images, dsize=(600, 100))
+            render_images = cv2.resize(render_images, dsize=(500 * 6, 500))
             cv2.imshow("render_images", render_images)
 
     s.disconnect()
