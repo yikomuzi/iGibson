@@ -110,6 +110,29 @@ def main(selection="user", headless=False, short_exec=False):
                                  [int(z_2d[0]), int(z_2d[1])], (255, 0, 0), 3)
                 except Exception as e:
                     print(e)
+
+            #
+            try:
+                camera_intrinsics = s.renderer.get_intrinsics()
+                camera_extrinsics = compute_camera_extrinsics_matrix(s)
+                o_2d = trans_3d_point_to_2d_pixel([0, 0, 0, 1], camera_extrinsics, camera_intrinsics)
+                x_2d = trans_3d_point_to_2d_pixel([1, 0, 0, 1], camera_extrinsics, camera_intrinsics)
+                y_2d = trans_3d_point_to_2d_pixel([0, 1, 0, 1], camera_extrinsics, camera_intrinsics)
+                z_2d = trans_3d_point_to_2d_pixel([0, 0, 1, 1], camera_extrinsics, camera_intrinsics)
+                whether_in_the_image = True
+                for i in [int(o_2d[0]), int(o_2d[1]), int(x_2d[0]), int(x_2d[1]), int(y_2d[0]), int(y_2d[1]),
+                          int(z_2d[0]), int(z_2d[1])]:
+                    whether_in_the_image = whether_in_the_image and 0 < i < 500
+                if whether_in_the_image == True:
+                    cv2.line(render_images, [int(o_2d[0]), int(o_2d[1])],
+                             [int(x_2d[0]), int(x_2d[1])], (0, 0, 255), 8)
+                    cv2.line(render_images, [int(o_2d[0]), int(o_2d[1])],
+                             [int(y_2d[0]), int(y_2d[1])], (0, 255, 0), 8)
+                    cv2.line(render_images, [int(o_2d[0]), int(o_2d[1])],
+                             [int(z_2d[0]), int(z_2d[1])], (255, 0, 0), 8)
+            except Exception as e:
+                print(e)
+
             cv2.imshow("object coordinate", render_images)
 
     s.disconnect()

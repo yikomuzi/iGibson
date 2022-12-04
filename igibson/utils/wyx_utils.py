@@ -21,7 +21,7 @@ def trans_3d_point_to_2d_pixel(pose_w, extrinsics, intrinsics):
     pose_c = np.matmul(extrinsics, np.array([[pose_w[0]], [pose_w[1]], [pose_w[2]], [1]], dtype=float))
     pose_c = pose_c / pose_c[3]
     pose_c = pose_c[:3]
-    print(pose_c)
+    # print(pose_c)
     if pose_c[2] < 0:
         e = Exception("深度值为负数")
         raise e
@@ -42,13 +42,13 @@ def compute_camera_extrinsics_matrix(s):
     yaxis = np.cross(direction, xaxis)
     yaxis = yaxis / np.sqrt(np.sum(yaxis ** 2))
 
-    r = np.array([[xaxis[0], yaxis[0], direction[0]],
+    R = np.array([[xaxis[0], yaxis[0], direction[0]],
                   [xaxis[1], yaxis[1], direction[1]],
                   [xaxis[2], yaxis[2], direction[2]]])
 
-    t = np.array([[r[0][0], r[0][1], r[0][2], camera_position[0]],
-                  [r[1][0], r[1][1], r[1][2], camera_position[1]],
-                  [r[2][0], r[2][1], r[2][2], camera_position[2]],
+    T = np.array([[R[0][0], R[0][1], R[0][2], camera_position[0]],
+                  [R[1][0], R[1][1], R[1][2], camera_position[1]],
+                  [R[2][0], R[2][1], R[2][2], camera_position[2]],
                   [0, 0, 0, 1]])
-    t = np.linalg.inv(t)
-    return t
+    T = np.linalg.inv(T)
+    return T

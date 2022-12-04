@@ -661,7 +661,7 @@ class Viewer:
             frame = np.zeros((300, 300, 3)).astype(np.uint8)
 
         # Text with the position and viewing direction of the camera of the external viewer
-        text_color = (0, 0, 0)
+        text_color = (0, 0, 1)
         cv2.putText(
             frame,
             "px {:1.1f} py {:1.1f} pz {:1.1f}".format(self.px, self.py, self.pz),
