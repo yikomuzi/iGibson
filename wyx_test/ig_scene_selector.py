@@ -26,7 +26,7 @@ def main(selection="user", headless=False, short_exec=False):
     # print("*" * 80 + "\nDescription:" + main.__doc__ + "*" * 80)
     # available_ig_scenes = get_first_options()
     # scene_id = available_ig_scenes[let_user_pick(available_ig_scenes, selection=selection) - 1]
-    scene_id = 'Rs_int'
+    scene_id = 'scene_test01'
     settings = MeshRendererSettings(enable_shadow=True, msaa=True, blend_highlight=True, )
     # if platform == "darwin":
     #     settings.texture_scale = 0.5
@@ -42,6 +42,7 @@ def main(selection="user", headless=False, short_exec=False):
         scene_id,
         # load_object_categories=[],  # To load only the building. Fast
         build_graph=True,
+        urdf_file="scene_test06"
     )
     # scene = EmptyScene()
     print(scene.get_objects())

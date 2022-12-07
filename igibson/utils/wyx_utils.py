@@ -31,7 +31,7 @@ def trans_3d_point_to_2d_pixel(pose_w, extrinsics, intrinsics):
     return pose_xy
 
 
-def compute_camera_extrinsics_matrix(s):
+def compute_camera_extrinsics_matrix(s):  # 注意返回的是TCW
     camera_position = [s.viewer.px, s.viewer.py, s.viewer.pz]
     up = s.renderer.up
 

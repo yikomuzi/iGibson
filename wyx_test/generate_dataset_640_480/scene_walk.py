@@ -22,15 +22,16 @@ from scipy.spatial.transform import Rotation
 
 def main():
     scene_id = 'scene_test01'
-    settings = MeshRendererSettings(enable_shadow=True, msaa=True, blend_highlight=True, )
+    settings = MeshRendererSettings(enable_shadow=True, msaa=True, blend_highlight=False)
     # if platform == "darwin":
     #     settings.texture_scale = 0.5
     s = Simulator(
         mode="gui_interactive",
-        image_width=500,
-        image_height=500,
+        image_width=640,
+        image_height=480,
         rendering_settings=settings,
         # use_pb_gui=True
+        gravity=0
     )
 
     scene = InteractiveIndoorScene(
@@ -52,39 +53,42 @@ def main():
     target_x_list = np.linspace(0.2, -0.2, step_size)
     print(target_x_list)
     pose_truth = list()
-    while step != step_size:
-        # while True:
+    # while step != step_size:
+    while True:
         with Profiler("Simulator step"):
             # 设置相机位姿和相机观察目标点
-            x = x_list[step]
-            y = (b) ** 2 * math.sqrt(1 - (x / a) ** 2)
-            z = 0.5 + 0.25 * math.sin(x * 3.14 * 2.5)
-            camera_pose = [x, y, z]
-
-            target_x = target_x_list[step]
-            target_y = (0.2) ** 2 - (target_x) ** 2
-            target_z = 0 + 0.1 * math.sin(x * 3.14 * 4)
-            camera_target = [target_x, target_y, target_z]
-
-            s.viewer.px = camera_pose[0]
-            s.viewer.py = camera_pose[1]
-            s.viewer.pz = camera_pose[2]
-            s.viewer.view_direction = np.array(
-                [camera_target[0] - camera_pose[0], camera_target[1] - camera_pose[1],
-                 camera_target[2] - camera_pose[2]])
-            s.viewer.view_direction = s.viewer.view_direction / np.sqrt(np.sum(s.viewer.view_direction ** 2))
+            # x = x_list[step]
+            # y = (b) ** 2 * math.sqrt(1 - (x / a) ** 2)
+            # z = 0.5 + 0.25 * math.sin(x * 3.14 * 2.5)
+            # camera_pose = [x, y, z]
+            #
+            # target_x = target_x_list[step]
+            # target_y = (0.2) ** 2 - (target_x) ** 2
+            # target_z = 0 + 0.1 * math.sin(x * 3.14 * 4)
+            # camera_target = [target_x, target_y, target_z]
+            #
+            # s.viewer.px = camera_pose[0]
+            # s.viewer.py = camera_pose[1]
+            # s.viewer.pz = camera_pose[2]
+            # s.viewer.view_direction = np.array(
+            #     [camera_target[0] - camera_pose[0], camera_target[1] - camera_pose[1],
+            #      camera_target[2] - camera_pose[2]])
+            # s.viewer.view_direction = s.viewer.view_direction / np.sqrt(np.sum(s.viewer.view_direction ** 2))
 
             s.step()
             step += 1
 
+            print("camera intrinsics: ")
+            print(s.renderer.get_intrinsics())
+
             # 输出相机初始位姿
-            if step == 1:
-                print(compute_camera_extrinsics_matrix(s))
-            T = compute_camera_extrinsics_matrix(s)
-            T = np.linalg.inv(T)
-            R = T[:3, :3]
-            R_quat = Rotation.from_matrix(R).as_quat()
-            pose_truth.append([step, T[0][3], T[1][3], T[2][3], R_quat[0], R_quat[1], R_quat[2], R_quat[3]])
+            # if step == 1:
+            #     print(compute_camera_extrinsics_matrix(s))
+            # T = compute_camera_extrinsics_matrix(s)
+            # T = np.linalg.inv(T)
+            # R = T[:3, :3]
+            # R_quat = Rotation.from_matrix(R).as_quat()
+            # pose_truth.append([step, T[0][3], T[1][3], T[2][3], R_quat[0], R_quat[1], R_quat[2], R_quat[3]])
 
             frame = s.renderer.render(modes='rgb')
             render_images = cv2.cvtColor(np.concatenate(frame, axis=1), cv2.COLOR_RGB2BGR)
@@ -181,14 +185,14 @@ def main():
             cv2.imshow("object coordinate", render_images)
             cv2.imshow("depth image", depth)
 
-            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/rgb/" + str(step) + ".png",
-                        rgb_image)
-            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/depth/" + str(step) + ".png", depth)
-            time.sleep(0.05)
+            # cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/rgb/" + str(step) + ".png",
+            #             rgb_image)
+            # cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/depth/" + str(step) + ".png", depth)
+            # time.sleep(0.05)
 
     s.disconnect()
 
-    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/pose_truth.txt', 'w') as f:
+    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/pose_truth.txt', 'w') as f:
         for line in pose_truth:
             line = ' '.join([str(i) for i in line])
             f.write(line)

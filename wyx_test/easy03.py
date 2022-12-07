@@ -30,12 +30,13 @@ def main():
         image_width=500,
         image_height=500,
         rendering_settings=settings,
+        gravity=0
         # use_pb_gui=True
     )
 
     scene = InteractiveIndoorScene(
         scene_id,
-        urdf_file="scene_test03",
+        urdf_file="scene_test05",
         # load_object_categories=[],  # To load only the building. Fast
         build_graph=True,
     )
@@ -44,7 +45,7 @@ def main():
     s.import_scene(scene)
 
     step = 0
-    step_size = 200
+    step_size = 100
     a = 2.2
     b = 1.5
     x_list = np.linspace(-1.5, 1.5, step_size)
@@ -181,14 +182,14 @@ def main():
             cv2.imshow("object coordinate", render_images)
             cv2.imshow("depth image", depth)
 
-            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/rgb/" + str(step) + ".png",
+            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy03/rgb/" + str(step) + ".png",
                         rgb_image)
-            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/depth/" + str(step) + ".png", depth)
+            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy03/depth/" + str(step) + ".png", depth)
             time.sleep(0.05)
 
     s.disconnect()
 
-    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/pose_truth.txt', 'w') as f:
+    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy03/pose_truth.txt', 'w') as f:
         for line in pose_truth:
             line = ' '.join([str(i) for i in line])
             f.write(line)

@@ -22,15 +22,16 @@ from scipy.spatial.transform import Rotation
 
 def main():
     scene_id = 'scene_test01'
-    settings = MeshRendererSettings(enable_shadow=True, msaa=True, blend_highlight=True, )
+    settings = MeshRendererSettings(enable_shadow=True, msaa=True, blend_highlight=False)
     # if platform == "darwin":
     #     settings.texture_scale = 0.5
     s = Simulator(
         mode="gui_interactive",
-        image_width=500,
-        image_height=500,
+        image_width=640,
+        image_height=480,
         rendering_settings=settings,
         # use_pb_gui=True
+        gravity=0
     )
 
     scene = InteractiveIndoorScene(
@@ -181,14 +182,14 @@ def main():
             cv2.imshow("object coordinate", render_images)
             cv2.imshow("depth image", depth)
 
-            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/rgb/" + str(step) + ".png",
+            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/rgb/" + str(step) + ".png",
                         rgb_image)
-            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/depth/" + str(step) + ".png", depth)
+            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/depth/" + str(step) + ".png", depth)
             time.sleep(0.05)
 
     s.disconnect()
 
-    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/easy01/pose_truth.txt', 'w') as f:
+    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/pose_truth.txt', 'w') as f:
         for line in pose_truth:
             line = ' '.join([str(i) for i in line])
             f.write(line)
