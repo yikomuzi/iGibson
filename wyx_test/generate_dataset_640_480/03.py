@@ -36,7 +36,7 @@ def main():
 
     scene = InteractiveIndoorScene(
         scene_id,
-        urdf_file="01",
+        urdf_file="03",
         # load_object_categories=[],  # To load only the building. Fast
         build_graph=True,
     )
@@ -53,6 +53,7 @@ def main():
     # target_x_list = np.linspace(2, -2, step_size)
     # print(target_x_list)
     pose_truth = list()
+    object_pose = list()
     while step != step_size:
         # while True:
         with Profiler("Simulator step"):
@@ -62,9 +63,9 @@ def main():
             z = 0.5 + 0.25 * math.sin(x * 3.14 * 2.5)
             camera_pose = [x, y, z]
 
-            target_x = 1.8 * math.cos((step / step_size) * 3.14 * 3.9 + 0.3)
+            target_x = 0.4 * math.cos((step / step_size) * 3.14 * 3.9 + 0.3)
             target_y = 0.8 * math.sin((step / step_size) * 3.14 * 3.2 + 1.2)
-            target_z = 0.2 + 1.8 * math.cos((step / step_size) * 3.14 * 4 + 0.5)
+            target_z = 0.2 + 0.7 * math.cos((step / step_size) * 3.14 * 4 + 0.5)
             camera_target = [target_x, target_y, target_z]
 
             s.viewer.px = camera_pose[0]
@@ -107,10 +108,16 @@ def main():
             # print(body_ids)
             # s.scene.get_objects()
             # body_ids = [7]
-            for id in body_ids:
+            for id in [5]:
                 try:
                     trans, orn = p.getBasePositionAndOrientation(id)
-                    orn = quat2rotmat(xyzw2wxyz(orn))
+                    orn = quat2rotmat(xyzw2wxyz(orn))  # R_wo
+                    Two = np.array([[orn[0][0], orn[0][1], orn[0][2], trans[0]],
+                                    [orn[1][0], orn[1][1], orn[1][2], trans[1]],
+                                    [orn[2][0], orn[2][1], orn[2][2], trans[2]],
+                                    [0, 0, 0, 1]])
+                    Tco = np.matmul(compute_camera_extrinsics_matrix(s), Two)
+                    object_pose.append([step, id, Tco])
 
                     o_3d_oral = (0, 0, 0)
                     x_3d_oral = (0.1, 0, 0)
@@ -182,18 +189,28 @@ def main():
             cv2.imshow("object coordinate", render_images)
             cv2.imshow("depth image", depth)
 
-            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/rgb/" + str(step) + ".png",
+            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/03/rgb/" + str(step) + ".png",
                         rgb_image)
-            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/depth/" + str(step) + ".png", depth)
+            cv2.imwrite("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/03/depth/" + str(step) + ".png", depth)
             time.sleep(0.05)
 
     s.disconnect()
 
-    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/pose_truth.txt', 'w') as f:
+    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/03/pose_truth.txt', 'w') as f:
         for line in pose_truth:
             line = ' '.join([str(i) for i in line])
             f.write(line)
             f.write('\n')
+
+    fs = cv2.FileStorage("/home/ubuntu/Desktop/iGibson_study/igibson_dataset/03/object_pose.yml", cv2.FileStorage_WRITE)
+    fs.startWriteStruct("object_pose", cv2.FileNode_MAP)
+    for i in object_pose:
+        fs.startWriteStruct("object " + str(i[0]), cv2.FileNode_MAP)
+        fs.write("time", i[0])
+        fs.write("id", i[1])
+        fs.write("Tco", i[2])
+        fs.endWriteStruct()
+    fs.endWriteStruct()
 
 
 if __name__ == "__main__":

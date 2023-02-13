@@ -36,7 +36,7 @@ def main():
 
     scene = InteractiveIndoorScene(
         scene_id,
-        urdf_file="scene_test03",
+        urdf_file="01",
         # load_object_categories=[],  # To load only the building. Fast
         build_graph=True,
     )
@@ -96,7 +96,7 @@ def main():
             # 渲染深度图
             frame_3d = s.renderer.render(modes="3d")[0]
             depth_low = 0
-            depth_high = 20
+            depth_high = 10
             depth = -frame_3d[:, :, 2:3]
             # 0.0 is a special value for invalid entries
             depth[depth < depth_low] = 0.0
@@ -191,12 +191,6 @@ def main():
             # time.sleep(0.05)
 
     s.disconnect()
-
-    with open('/home/ubuntu/Desktop/iGibson_study/igibson_dataset/01/pose_truth.txt', 'w') as f:
-        for line in pose_truth:
-            line = ' '.join([str(i) for i in line])
-            f.write(line)
-            f.write('\n')
 
 
 if __name__ == "__main__":
